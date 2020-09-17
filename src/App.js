@@ -15,7 +15,13 @@ import {
   CardContent,
   CardActions,
   BottomNavigation,
-  BottomNavigationAction
+  BottomNavigationAction,
+  Dialog,
+  DialogTitle,
+  DialogContentText,
+  DialogContent,
+  DialogActions,
+  TextField
 } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import LayerIcon from '@material-ui/icons/Layers';
@@ -73,9 +79,18 @@ const cards = [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ];
 function App() {
   const classes = useStyles();
   const [ value, setValue ] = useState('recents');
+  const [ open, setOpen ] = useState(false);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
+  };
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
   };
 
   return (
@@ -88,7 +103,21 @@ function App() {
             </IconButton>
             <Typography variant="h6" className={classes.title}>Material UI</Typography>
             <Box mr={3}>
-              <Button color="inherit" variant="outlined">Log In</Button>
+              <Button color="inherit" variant="outlined" onClick={handleClickOpen}>Log In</Button>
+
+              <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+                <DialogTitle id="form-dialog-title">Log in</DialogTitle>
+                <DialogContent>
+                  <DialogContentText>Log in to see videos</DialogContentText>
+                  <TextField margin="dense" id="name" label="Email Address" type="email" fullWidth autoFocus />
+                  <TextField margin="dense" id="pass" label="Password" type="password" fullWidth />
+                </DialogContent>
+                <DialogActions>
+                  <Button onClick={handleClose} color="primary">Cancel</Button>
+                  <Button onClick={handleClose} color="primary">Log in</Button>
+                </DialogActions>
+              </Dialog>
+
             </Box>
             <Button color="secondary" variant="contained">Sign Up</Button>
           </Toolbar>
